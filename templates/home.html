@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Cifar10 Web</title>
+</head>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type=text/javascript>
+    function getClass(){
+        $.ajax({
+            type : 'POST',
+            url : '/getClass',
+            dataType : 'JSON',
+            success:function(data){
+                $('#classes').text(data.resp)
+            },
+            error:function(xtr, status, error){
+                alert(xtr +":"+status+":"+error);
+            }
+        });
+    }
+
+    function generateImg(){
+        $.ajax({
+            type : 'GET',
+            url : '/generateImg',
+            dataType : 'JSON',
+            success:function(data){
+                alert('이미지 변환 성공')
+                // $('#classes').text(data.resp)
+            },
+            error:function(xtr, status, error){
+                alert(xtr +":"+status+":"+error);
+            }
+        });
+    }
+
+
+</script>
+
+
+
+<body>
+    <div class="container">
+        <table class="table table-bordered">
+            <thead>
+                <caption class="text-center" style="caption-side: top;">Cifar</caption>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>이미지</td>
+                    <td><img src ='{{ img_src }}' width=128 height=128></td>
+                </tr>
+                <tr>
+                    <td>클래스</td>
+                    <td><p id="classes"></p></td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="text-align: center;">
+            <button onclick="getClass();">분류하기</button>
+            <!-- <button onclick="generateImg();">변환하기</button> -->
+        </div>
+    </div>
+</body>
+
+</html>
